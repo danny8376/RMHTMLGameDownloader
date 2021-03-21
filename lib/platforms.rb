@@ -11,4 +11,5 @@ module Platforms
 end
 
 require './lib/platforms/nico'
+require './lib/platforms/freem'
 
