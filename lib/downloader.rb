@@ -51,10 +51,6 @@ class Downloader
     @plugins = []
   end
 
-  def get(path)
-    @platform.get path
-  end
-
   def check_dir(path, file=false)
     dir = file ? File.dirname(path) : path
     FileUtils.mkdir_p dir unless File.exist? dir
@@ -76,7 +72,7 @@ class Downloader
       return
     end
     puts "Downloading #{path} ..."
-    cont = get path
+    cont = @platform.get path
     write path, cont
     cont
   rescue Exception => err
@@ -337,7 +333,7 @@ class Downloader
 
   def run
     puts "Getting index.html"
-    index = Nokogiri::HTML get("index.html")
+    index = @platform.index
 
     # Download icons
     for ele in index.css("head link[rel*=icon]")
@@ -355,7 +351,7 @@ class Downloader
       end
     end
 
-    @platform.process_index_scripts index do |src|
+    @platform.process_index_scripts do |src|
       cont = dl src
       case src
       when "js/plugins.js"

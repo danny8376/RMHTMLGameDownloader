@@ -55,8 +55,13 @@ module Platforms
       return res.body
     end
 
-    def process_index_scripts(index_dom)
-      for ele in index_dom.css("script")
+    def index
+      @index = Nokogiri::HTML get("index.html") unless @index
+      @index
+    end
+
+    def process_index_scripts
+      for ele in @index.css("script")
         src = ele['src']
         if src.start_with? "/"
           #remove all script outside game path (NicoNico specific)
