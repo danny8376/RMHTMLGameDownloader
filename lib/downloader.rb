@@ -220,7 +220,7 @@ class Downloader
         data = @database[dataname] = JSON.parse(datacont)
         if respond_to? "process_data_#{dataname.downcase}"
           puts "Processing #{dataname}"
-#          send "process_data_#{dataname.downcase}", data
+          send "process_data_#{dataname.downcase}", data
         end
       rescue Exception => err
         puts err.message
